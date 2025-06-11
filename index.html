@@ -61,6 +61,27 @@
       font-size: 0.9em;
       opacity: 0.7;
     }
+
+button {
+      font-size: 18px;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: black;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    img {
+      margin-top: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    
   </style>
 </head>
 <body>
@@ -70,7 +91,50 @@
     <a href="games/rock-paper-scissors/index.html" class="game-link">Rock Paper Scissors</a>
     <a href="games/snake/index.html" class="game-link">Snake</a>
     <a href="games/pong/index.html" class="game-link">Pong</a>
+
+<button onclick="showImage()">Push here</button>
+    
+    <img id="myImage" src="Image.JPG" style="display:none" alt="hell nah" width="500">
+    
   </div>
+
+ <script>
+    
+        function showImage() {
+            document.getElementById('myImage').style.display = 'block'
+        }
+
+    //green thing    
+    
+    var canvas = document.createElement('canvas')
+        canvas.width = 600;
+        canvas.height = 600;
+        document.body.appendChild(canvas);
+
+        var c = canvas.getContext('2d')
+
+        var x = 10
+        var y = 10
+
+        window.addEventListener('load', start)
+
+        function start() {
+            window.requestAnimationFrame(loop)
+        }
+
+        function loop() {
+            c.clearRect(0, 0, canvas.width, canvas.height);
+
+            c.fillStyle = 'green'
+            c.fillRect(x, y, 30, 30)
+
+            x = x + 1
+
+            window.requestAnimationFrame(loop);
+        }
+
+    </script>
+  
   <footer>
     <p>Made with Jake</p>
   </footer>
