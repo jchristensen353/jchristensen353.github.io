@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test</title>
+</head>
+<style>
+
+    input {
+        font-size: large;
+        padding: 5px;
+        gap: 40px;
+        border-radius: 12px;
+        border:none
+    }
+ 
+    body {
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        background-color: black;
+        gap: 15px
+    }
+
+    button {
+        padding: 10px;
+        border-radius: 12px;
+        border: none;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        flex-direction: row;
+        width: 67px;
+        height: 67px
+    }
+
+    button:hover {
+        background-color: #C0C0C0; 
+        transform: scale(1.05);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+    }
+    
+    div {
+        background-color: gray;
+        border-radius: 50px;
+        border: none;
+    }
+   
+    .container {
+        display:flex; 
+        flex-direction: column; 
+        align-items: center; 
+        gap: 10px; 
+        padding: 40px
+    }
+
+    .result {
+        background-color: white;
+        width: 300px;          
+        height: 80px;          
+        border-radius: 12px;
+        padding: 10px 15px;    
+        font-size: xx-large;
+        text-align: left;      
+        display: flex;
+        align-items: center;   
+        overflow-x: auto;      
+        white-space: nowrap;
+    }
+
+    .main {
+        flex: 1;
+        text-align: left;
+        background-color: white;
+        overflow-x: auto;
+        padding-left: 10px;
+    }
+
+    h1 {
+        border-radius: 15px;
+        border: none;
+        padding: 10px;
+        background-color: white;
+    }
+
+    .numbers_buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        font-size: xx-large;
+        padding: 15px 25px;
+    }
+
+    .first_row_buttons, .second_row_buttons, .third_row_buttons, .fourth_row_buttons {
+        display: flex;
+        flex-direction: row;
+        gap:15px;
+    } 
+
+</style>
+<body>
+
+    <div class="container"> 
+        <div class="result">
+            <div class="main" id="main"></div>
+        </div>   
+
+            <div class="numbers_buttons">
+
+                <div class="first_row_buttons">
+                    <button class="numbers_buttons" id="one">1</button>
+                    <button class="numbers_buttons" id="two">2</button>
+                    <button class="numbers_buttons" id="three">3</button>
+                    <button class="numbers_buttons" id="mult">x</button>
+                </div>
+
+                <div class="second_row_buttons">
+                    <button class="numbers_buttons" id="four">4</button>
+                    <button class="numbers_buttons" id="five">5</button>
+                    <button class="numbers_buttons" id="six">6</button>
+                    <button class="numbers_buttons" id="subtract">-</button>
+                </div>
+
+                <div class="third_row_buttons">    
+                    <button class="numbers_buttons" id="seven">7</button>
+                    <button class="numbers_buttons" id="eight">8</button>
+                    <button class="numbers_buttons" id="nine">9</button>
+                    <button class="numbers_buttons" id="add">+</button>
+                </div>
+
+                <div class="fourth_row_buttons">    
+                    <button id="clear" class="numbers_buttons">CE</button>
+                    <button class="numbers_buttons" id="zero">0</button>
+                    <button id="result" class="numbers_buttons">=</button>
+                    <button class="numbers_buttons" id="divide">÷</button>
+                </div>
+
+            </div>
+
+</div>
+
+
+<script>
+    
+    const main = document.getElementById('main');
+
+    //call numbers from document
+        const one = document.getElementById('one');
+        const two = document.getElementById('two');
+        const three = document.getElementById('three');
+        const four = document.getElementById('four');
+        const five = document.getElementById('five');
+        const six = document.getElementById('six');
+        const seven = document.getElementById('seven');
+        const eight = document.getElementById('eight');
+        const nine = document.getElementById('nine');
+        const zero = document.getElementById('zero');
+
+    //put number in display and read number
+        let currentInput = ''
+    
+        function addNumber(num) {
+            currentInput += num;
+            main.textContent = currentInput;
+        }
+
+        one.onclick = () => addNumber('1');
+        two.onclick = () => addNumber('2');
+        three.onclick = () => addNumber('3');
+        four.onclick = () => addNumber('4');
+        five.onclick = () => addNumber('5');
+        six.onclick = () => addNumber('6');
+        seven.onclick = () => addNumber('7');
+        eight.onclick = () => addNumber('8');
+        nine.onclick = () => addNumber('9');
+        zero.onclick = () => addNumber('0');
+
+    //call operation from doc
+        const add1 = document.getElementById('add');
+        const subtract1 =document.getElementById('subtract');
+        const mult1 =document.getElementById('mult');
+        const divide1 = document.getElementById('divide');
+  
+    //store first number and operation
+        let firstNumber = null;
+        let operation = null;
+
+    //onclick run function X
+        add1.onclick = () => setOperation('add');
+        subtract1.onclick = () => setOperation('subtract');
+        mult1.onclick = () => setOperation('mult')
+        divide1.onclick = () => setOperation('divide')
+    
+        function setOperation(op) {
+            if (currentInput === '') return;
+            firstNumber = parseFloat(currentInput);
+            operation = op;
+            currentInput = '';
+            main.textContent = '';
+        }
+   
+    //handle results
+
+        const resultButton = document.getElementById('result');
+        resultButton.onclick = () => calculate();
+
+        function calculate() {
+            if (currentInput === '' || firstNumber === null || operation === null) return;
+
+            let secondNumber = parseFloat(currentInput);
+            let result;
+
+            switch (operation) {
+                case 'add':
+                    result = firstNumber + secondNumber;
+                    break;
+                case 'subtract':
+                    result = firstNumber - secondNumber;
+                    break;
+                case 'mult':
+                    result = firstNumber * secondNumber;
+                    break;
+                case 'divide':
+                    result = firstNumber / secondNumber;
+                    break;
+            }
+
+            main.textContent = result;
+            currentInput = result.toString();
+            firstNumber = null;
+            operation = null;
+        }
+
+    //clear function
+        const clear = document.getElementById('clear');
+
+        function clear1() {
+            currentInput = '';
+            firstNumber = null;
+            main.textContent = '';
+            operation = null;
+        }
+
+        clear.onclick = clear1;
+
+</script>
+</body>
+</html>
